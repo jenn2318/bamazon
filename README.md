@@ -1,6 +1,6 @@
-#bamazon
+# bamazon
 
-#Overview
+# Overview
 The app will take in orders from customers and deplete stock from the store's inventory. As a bonus task, you can program your app to track product sales across your store's departments and then provide a summary of the highest-grossing departments in the store.
 
 Make sure to require MySQL and Inquirer npm packages, this app will need them for data and input storage
@@ -10,10 +10,10 @@ Tech stack used:
 Node.js, JavaScript, and MySQL
 
 
-#Instructions
+# Instructions
 
 
-##Challenge #1: Customer View (Minimum Requirement)
+## Challenge #1: Customer View (Minimum Requirement)
 
 Create a MySQL Database called bamazon.
 Then create a Table inside of that database called products.
@@ -47,7 +47,7 @@ If this activity took you between 8-10 hours, then you've put enough time into t
 
 ------------------------------------------------------------------------------------------------------------------------------
 
-##Challenge #2: Manager View (Next Level)
+## Challenge #2: Manager View (Next Level)
 
 Create a new Node application called bamazonManager.js. Running this application will:
 
@@ -69,7 +69,7 @@ If you finished Challenge #2 and put in all the hours you were willing to spend 
 
 ------------------------------------------------------------------------------------------------------------------------------
 
-##Challenge #3: Supervisor View (Final Level)
+## Challenge #3: Supervisor View (Final Level)
 
 Create a new MySQL table called departments. Your table should include the following columns:
 
