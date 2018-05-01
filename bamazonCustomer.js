@@ -2,6 +2,8 @@
 let mysql = require("mysql");
 let inquirer = require("inquirer");
 
+let numberOfUnits = '';
+
 let connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
@@ -35,17 +37,20 @@ function productSearch() {
           message: "Would you like to view our products?"
         }
    .then(function(answer) {
-        switch (answer.id) {
-        case "Find product by ID":
-          productSearch();
-          break;
+       switch (answer.id) {
+           case "Find product by ID":
+               productSearch();
+               break;
 
-        case "Find product by number of units":
-          unitsToBuy();
-          break;
-        }
+           case "Find product by number of units":
+               unitsToBuy();
+               break;
+       }
+
     });
-  
+
+}
+
 function productSearch() {
   inquirer
       .prompt({
@@ -74,7 +79,7 @@ function productSearch() {
                   message: "How many units of the product would you like to buy?"
               })
               .then(function(answer) {
-                  var query = "SELECT id FROM bamazon_db WHERE=item_id ?";
+                  let query = "SELECT id FROM bamazon_db WHERE=item_id ?";
                   connection.query(query, { id: answer.id }, function(err, res) {
                       for (var i = 0; i < res.length; i++) {
                           if (numberOfUnits < 5) {
