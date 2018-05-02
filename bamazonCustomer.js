@@ -19,7 +19,10 @@ let connection = mysql.createConnection({
 connection.connect(function(err) {
     if (err) throw err;
     console.log("connected as id " + connection.threadId);
-    userSearch();
+    //userSearch();
+    userDecide();
+    //productSearch();
+    //unitsToBuy();
 });
 
 
@@ -36,7 +39,7 @@ function userSearch() {
         .prompt({
                 type: "input",
                 name: "name",
-                message: "Welcome to bamazon"
+                message: "Welcome to bamazon!, Would you like to view our products?"
             },
             {
                 //type: "input",
@@ -44,7 +47,7 @@ function userSearch() {
                 //message: "We Love Our Customers"
             })
         .then(function (answer) {
-            switch (answer.id) {
+            switch (answer.name) {
                 case "Find product by ID":
                     productSearch();
                     break;
@@ -56,11 +59,13 @@ function userSearch() {
 
         });
 
+    }
+
 
     function userDecide() {
         inquirer
             .prompt({
-                name: "response",
+                name: "name",
                 type: "list",
                 message: "Would you like to view our products?",
                 choices: [
@@ -69,16 +74,14 @@ function userSearch() {
                 ]
             })
             .then(function (answer) {
-                console.log(answer.response); {
+                console.log(answer.name);
+                    if (answer.name === "Y") {
+                        console.log("Ok, great!");
 
-                    //console.log(answer.response);
-                    //case "Find by product id":
-                    //  productSearch();
-                     //   break;
-
-                    //case "Find all product by number of units":
-                       // unitsToBuy();
-                      // break;
+                    } else {
+                  if (answer.name === "N") {
+                        console.log("Come On, Have Another Look!");
+                    }
                 }
             });
          }
@@ -94,17 +97,12 @@ function userSearch() {
                 ]
             })
             .then(function (answer) {
-                let query = "SELECT id FROM bamazon WHERE=item_id?";
+                let query = "SELECT id FROM products WHERE=item_id=2";
                 connection.query(query, {id: answer.id}, function (err, res) {
                     for (var i = 0; i < res.length; i++) {
-                        //console.log("id: " + id[i]);
-                        if (answer.response === "Y") {
-                            return id[i];
-                        } else if (answer.response === "N") {
-                            console.log("Have Another Look!");
+                        unitsToBuy(res[0].product_name)
                         }
-                    }
-                    productSearch();
+
                 });
             });
         }
@@ -117,7 +115,7 @@ function userSearch() {
                 message: "How many units of the product would you like to buy?"
             })
             .then(function (answer) {
-                let query = "SELECT id FROM bamazon_db WHERE=item_id ?";
+                let query = "SELECT id FROM products WHERE=item_id?";
                 connection.query(query, {id: answer.id}, function (err, res) {
                     for (var i = 0; i < res.length; i++) {
                         if (numberOfUnits < 5) {
@@ -130,4 +128,3 @@ function userSearch() {
               });
          });
      }
-}
