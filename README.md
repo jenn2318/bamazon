@@ -5,9 +5,11 @@ The app will take in orders from customers and deplete stock from the store's in
 
 Make sure to require MySQL and Inquirer npm packages, this app will need them for data and input storage
 
-Tech stack used: 
+# Tech/framework used: 
 
-Node.js, JavaScript, and MySQL
+Node.js
+JavaScript
+MySQL
 
 
 # Instructions
@@ -41,6 +43,7 @@ However, if your store does have enough of the product, you should fulfill the c
 This means updating the SQL database to reflect the remaining quantity.
 Once the update goes through, show the customer the total cost of their purchase.
 
+ ![.update table example] (images/)
 
 If this activity took you between 8-10 hours, then you've put enough time into this assignment. Feel free to stop here -- unless you want to take on the next challenge.
 
