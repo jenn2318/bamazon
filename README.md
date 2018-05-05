@@ -7,11 +7,13 @@ Make sure to require MySQL and Inquirer npm packages, this app will need them fo
 
 # Tech/framework used: 
 
-Node.js
-JavaScript
-MySQL
+* Node.js
 
+*JavaScript
 
+*MySQL
+
+------------------------------------------------------------------------------------------------------------------------------
 # Instructions
 
 
