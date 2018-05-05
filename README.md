@@ -28,11 +28,12 @@ The products table should have each of the following columns:
 * stock_quantity (how much of the product is available in stores)
 
 ![SQL commands](images/SQL.png)
-![update table example](images/bamazon-imported-table.png)
 
 Populate this database with around 10 different products. (i.e. Insert "mock" data rows into this database and table).
 Then create a Node application called bamazonCustomer.js. Running this application will first display all of the items available for sale. Include the ids, names, and prices of products for sale.
 The app should then prompt users with two messages.
+
+![update table example](images/bamazon-imported-table.png)
 
 The first should ask them the ID of the product they would like to buy.
 The second message should ask how many units of the product they would like to buy.
