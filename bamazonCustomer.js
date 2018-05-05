@@ -2,7 +2,12 @@
 let mysql = require("mysql");
 let inquirer = require("inquirer");
 
-let numberOfUnits = '';
+
+let choicesArr = [];
+let purchase_amt;
+let product_price;
+let stock_onhand = '';
+
 
 let connection = mysql.createConnection({
   host: "localhost",
@@ -19,10 +24,9 @@ let connection = mysql.createConnection({
 connection.connect(function(err) {
     if (err) throw err;
     console.log("connected as id " + connection.threadId);
-    //userSearch();
-    userDecide();
-    //productSearch();
-    //unitsToBuy();
+    purchaseStuff();
+
+
 });
 
 
@@ -34,97 +38,81 @@ function afterConnection() {
   });
 }
 
-function userSearch() {
-    inquirer
-        .prompt({
-                type: "input",
-                name: "name",
-                message: "Welcome to bamazon!, Would you like to view our products?"
-            },
-            {
-                //type: "input",
-                //name: "Hello",
-                //message: "We Love Our Customers"
-            })
-        .then(function (answer) {
-            switch (answer.name) {
-                case "Find product by ID":
-                    productSearch();
-                    break;
-
-                case "Find product by number of units":
-                    unitsToBuy();
-                    break;
-            }
-
-        });
-
-    }
+    //}
 
 
-    function userDecide() {
+//function made for user to choose an ID of the Item they would like to purchase
+purchaseStuff = function () {
+    connection.query('SELECT * FROM products', function (err, res) {
+        let choicesArr = [];
+        // Display all items
+        console.log("Display all available items for sale");
+        console.log(res);
+        for (let i = 0; i < res.length; i++) {
+            choicesArr.push([res[i].item_id, res[i].product_name, res[i].department_name, res[i].price.toFixed(2), res[i].stock_quantity]);
+        }
+        console.log("-----");
+
+
+// inquirer to prompt the items they want to buy
+
         inquirer
-            .prompt({
-                name: "name",
-                type: "list",
-                message: "Would you like to view our products?",
-                choices: [
-                    "Y",
-                    "N"
-                ]
-            })
-            .then(function (answer) {
-                console.log(answer.name);
-                    if (answer.name === "Y") {
-                        console.log("Ok, great!");
-
+            .prompt([{
+                name: "id",
+                type: "input",
+                message: "Welcome to bamazon! Here are our products, Which item ID would you like to buy?",
+                validate: function (value) {
+                    if (isNaN(value) == false) {
+                        return true;
                     } else {
-                  if (answer.name === "N") {
-                        console.log("Come On, Have Another Look!");
+                        return false;
                     }
                 }
-            });
-         }
-
-    function productSearch() {
-        inquirer
-            .prompt({
-                name: "id",
-                type: "list",
-                message: "What is the id of the product you would like to purchase?",
-                choices: [
-                    '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'
-                ]
-            })
-            .then(function (answer) {
-                let query = "SELECT id FROM products WHERE=item_id=2";
-                connection.query(query, {id: answer.id}, function (err, res) {
-                    for (var i = 0; i < res.length; i++) {
-                        unitsToBuy(res[0].product_name)
+            },
+// This prompt will ask the user how many units they would like to buy
+                {
+                    name: "count",
+                    type: "input",
+                    message: "How many of this item would you like to buy?",
+                    validate: function (value) {
+                        if (isNaN(value) == false) {
+                            return true;
+                        } else {
+                            return false;
                         }
-
-                });
-            });
-        }
-
-    function unitsToBuy() {
-        inquirer
-            .prompt({
-                type: "confirm",
-                name: "count",
-                message: "How many units of the product would you like to buy?"
-            })
-            .then(function (answer) {
-                let query = "SELECT id FROM products WHERE=item_id?";
-                connection.query(query, {id: answer.id}, function (err, res) {
-                    for (var i = 0; i < res.length; i++) {
-                        if (numberOfUnits < 5) {
-                            return sum;
-                        } else if (numberOfUnits >= 5) {
-                            return sum;
-                        }
-                        productSearch();
                     }
-              });
-         });
-     }
+                }])
+            // query database, to update the stock quantity
+            .then(function (answer) {
+                let chosenID = answer.id - 1;
+                let chosenQuantity = answer.count;
+                //after taking in amount, verify if we have enough quantity
+                if (chosenQuantity < res[chosenID].stock_quantity) {
+                    //If i have i should update MySQL
+                    connection.query("UPDATE products SET ? WHERE ?", [{
+                        //mysql will update quantity
+                        stock_quantity: res[chosenID].stock_quantity - chosenQuantity
+                    }, {
+                        item_id: res[chosenID].item_id
+                    }], function (err, res) {
+                        console.log(res);
+                    });
+                } else {
+                    console.log("Insufficient quantity for the item you wanted!");
+                    //purchaseStuff();
+
+                }
+            });
+    });
+}
+
+
+//Function to show the price, still working on this function
+//function purchaseMade() {
+    //stock_onhand = stock_left
+  //  let query = "SELECT products WHERE price=?",
+    //connection.query(query,function(err, res){
+      //  console.log(res);
+    //  console.log("You're total price is $" + total_price);
+    //});
+      //purchaseMade();
