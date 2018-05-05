@@ -27,6 +27,7 @@ The products table should have each of the following columns:
 * price (cost to customer)
 * stock_quantity (how much of the product is available in stores)
 
+![SQL commands](images/SQL.png)
 ![update table example](images/bamazon-imported-table.png)
 
 Populate this database with around 10 different products. (i.e. Insert "mock" data rows into this database and table).
@@ -36,7 +37,7 @@ The app should then prompt users with two messages.
 The first should ask them the ID of the product they would like to buy.
 The second message should ask how many units of the product they would like to buy.
 
-![update table example] (images/)
+![node app testing](images/bamazon-04.png)
 
 Once the customer has placed the order, your application should check if your store has enough of the product to meet the customer's request.
 
@@ -46,9 +47,8 @@ However, if your store does have enough of the product, you should fulfill the c
 
 This means updating the SQL database to reflect the remaining quantity.
 Once the update goes through, show the customer the total cost of their purchase.
-
- ![node app testing](images/bamazon-04-01.png)
  
+ ![node app testing](images/bamazon-04-01.png)
  ![node app testing](images/bamazon-02-01.png)
 
 If this activity took you between 8-10 hours, then you've put enough time into this assignment. Feel free to stop here -- unless you want to take on the next challenge.
